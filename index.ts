@@ -1,9 +1,9 @@
-import Server from "./classes/server";
-import router  from "./routes/router";
 import bodyParser from "body-parser";
 import cors from "cors";
+import router from "./routes/router";
+import ServerIo from "./classes/serverIO";
 
-const server = new Server();
+const server = ServerIo.instance;
 
 server.app.use(bodyParser.urlencoded({extended: true}));
 server.app.use(bodyParser.json());
