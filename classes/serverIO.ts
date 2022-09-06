@@ -44,9 +44,11 @@ export default class ServerIo {
 
             socket.configurarUsuario(cliente, this.io);
 
+            socket.obtenerUsuario(cliente, this.io);
+
             socket.mensaje(cliente, this.io);
 
-            socket.desconectar(cliente);
+            socket.desconectar(cliente, this.io);
         });
     }
 
