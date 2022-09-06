@@ -1,4 +1,5 @@
 import express from "express";
+import http from "http";
 import { SERVER_PORT } from "../global/environments";
 import { Server } from 'socket.io';
 import { createServer } from "http";
@@ -12,11 +13,12 @@ export default class ServerIo {
     public app: express.Application;
     public port: number;
     public io: Server;
-    public httpServer = createServer();
+    public httpServer: http.Server;
 
 
     private constructor() {
         this.app = express();
+        this.httpServer = createServer(this.app);
         this.port = SERVER_PORT;
         this.io = new Server(this.httpServer, {
             cors: {
@@ -37,6 +39,10 @@ export default class ServerIo {
         console.log("Escuchando Sockets");
         this.io.on('connection', (cliente) =>{
             console.log('Nuevo cliente conectado');
+
+            socket.conectarCliente(cliente);
+
+            socket.configurarUsuario(cliente, this.io);
 
             socket.mensaje(cliente, this.io);
 
